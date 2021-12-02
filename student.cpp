@@ -43,7 +43,17 @@ Student::Student(const std::string& dataString)
         _courseDays[i] = std::stoi(szDays);
     }
 
-    idx = NextToken(dataString, _degreeProgram, idx);
+    std::string szDegreeProgram;
+    idx = NextToken(dataString, szDegreeProgram, idx);
+    if (szDegreeProgram == "SECURITY") {
+        _degreeProgram = DegreeProgram::SECURITY;
+    }
+    else if (szDegreeProgram == "NETWORK") {
+        _degreeProgram = DegreeProgram::NETWORK;
+    }
+    else if (szDegreeProgram == "SOFTWARE") {
+        _degreeProgram = DegreeProgram::SOFTWARE;
+    }
 }
 
 size_t Student::courses() const
@@ -81,7 +91,7 @@ int Student::getAge() const
     return _age;
 }
 
-const std::string& Student::getDegreeProgram() const
+DegreeProgram Student::getDegreeProgram() const
 {
     return _degreeProgram;
 }
@@ -111,7 +121,7 @@ void Student::setAge(int age)
     _age = age;
 }
 
-void Student::setDegreeProgram(const std::string& degreeProgram)
+void Student::setDegreeProgram(DegreeProgram degreeProgram)
 {
     _degreeProgram = degreeProgram;
 }
@@ -126,7 +136,11 @@ std::ostream& operator <<(std::ostream& out, const Student& student)
     for(int i = 0; i < student.courses(); ++i) {
         out << student.course_days(i) << ',';
     }
-    out << student.getDegreeProgram();
+    switch(student.getDegreeProgram()) {
+        case DegreeProgram::SECURITY: out << "SECURITY"; break;
+        case DegreeProgram::NETWORK:  out << "NETWORK";  break;
+        case DegreeProgram::SOFTWARE: out << "SOFTWARE"; break;
+    }
     return out;
 }
 

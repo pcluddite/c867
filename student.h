@@ -5,6 +5,8 @@
 #include <string>
 #include <array>
 
+#include "degree.h"
+
 const int DEFAULT_COURSE_COUNT = 3;
 
 class Student
@@ -16,7 +18,7 @@ class Student
         std::string _emailAddress;
         int _age;
         std::array<int, DEFAULT_COURSE_COUNT> _courseDays;
-        std::string _degreeProgram;
+        DegreeProgram _degreeProgram;
     public:
     
         Student();
@@ -31,14 +33,14 @@ class Student
         const std::string& getLastName() const;
         const std::string& getEmailAddress() const;
         int getAge() const;
-        const std::string& getDegreeProgram() const;
+        DegreeProgram getDegreeProgram() const;
 
         void setStudentId(const std::string&);
         void setFirstName(const std::string&);
         void setLastName(const std::string&);
         void setEmailAddress(const std::string&);
         void setAge(int);
-        void setDegreeProgram(const std::string&);
+        void setDegreeProgram(DegreeProgram);
 
         void print() const;
 };

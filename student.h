@@ -23,6 +23,10 @@ class Student
     
         Student();
         Student(const Student& other);
+        explicit Student(const std::string& studentId, const std::string& firstName,
+                         const std::string& lastName, const std::string& emailAddress,
+                         int age, const std::array<int,DEFAULT_COURSE_COUNT>& courseDays,
+                         DegreeProgram degreeProgram);
         explicit Student(const std::string& dataString);
 
         size_t courses() const;

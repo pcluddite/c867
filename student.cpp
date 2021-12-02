@@ -18,6 +18,20 @@ Student::Student(const Student& other)
 {
 }
 
+Student::Student(const std::string& studentId, const std::string& firstName,
+                 const std::string& lastName, const std::string& emailAddress,
+                 int age, const std::array<int,DEFAULT_COURSE_COUNT>& courseDays,
+                 DegreeProgram degreeProgram)
+    : _studentId(studentId),
+      _firstName(firstName),
+      _lastName(lastName),
+      _emailAddress(emailAddress),
+      _age(age),
+      _courseDays(courseDays),
+      _degreeProgram(degreeProgram)
+{   
+}
+
 static size_t NextToken(const std::string& szFull, std::string& token, size_t nStartIdx)
 {
     size_t nEndIdx = szFull.find(',', nStartIdx);

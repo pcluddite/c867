@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 {
     for(const std::string& studentRow : studentData) {
         Student s(studentRow);
-        std::cout << s << std::endl;
+        s.print();
     }
     return 0;
 }

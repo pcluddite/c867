@@ -74,13 +74,14 @@ void Roster::remove(const std::string& studentID)
     for(size_t i = 0; i < size; ++i) {
         if (classRosterArray[i]->getStudentId() == studentID) {
             delete classRosterArray[i];
-            for(size_t j = i + 1; i < size; ++j) {
+            for(size_t j = i + 1; j < size; ++j) {
                 classRosterArray[j - 1] = classRosterArray[j];
             }
             --size;
-            break;
+            return;
         }
     }
+    std::cout << "No student with id " << studentID << " was found" << std::endl;
 }
 
 size_t Roster::count() const

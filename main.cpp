@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 
+#include "roster.h"
 #include "student.h"
 
 static const std::string studentData[] = {
@@ -13,9 +14,13 @@ static const std::string studentData[] = {
 
 int main(int argc, char** argv)
 {
-    for(const std::string& studentRow : studentData) {
-        Student s(studentRow);
-        s.print();
+    Roster classRoster;
+    for(const std::string& studentString : studentData) {
+        classRoster.add(Student(studentString));
     }
+
+    classRoster.printAll();
+    classRoster.printInvalidEmails();
+
     return 0;
 }

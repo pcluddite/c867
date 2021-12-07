@@ -12,6 +12,7 @@ Student::Student(const Student& other)
     : _studentId(other.getStudentId()),
       _firstName(other.getFirstName()),
       _lastName(other.getLastName()),
+      _emailAddress(other.getEmailAddress()),
       _degreeProgram(other.getDegreeProgram()),
       _courseDays(other._courseDays),
       _age(other.getAge())
@@ -159,7 +160,7 @@ bool Student::isValidEmail() const
 
 void Student::print() const
 {
-    std::cout << *this;
+    std::cout << *this << std::endl;
 }
 
 std::ostream& operator <<(std::ostream& out, const Student& student)
@@ -182,6 +183,5 @@ std::ostream& operator <<(std::ostream& out, const Student& student)
         case DegreeProgram::NETWORK:  out << "Network";  break;
         case DegreeProgram::SOFTWARE: out << "Software"; break;
     }
-    out << std::endl;
     return out;
 }

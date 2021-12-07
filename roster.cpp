@@ -117,7 +117,7 @@ void Roster::trim_excess()
 void Roster::printAll() const
 {
     for(size_t i = 0; i < size; ++i) {
-        std::cout << *classRosterArray[i] << std::endl;
+        classRosterArray[i]->print();
     }
 }
 

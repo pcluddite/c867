@@ -140,25 +140,48 @@ void Student::setDegreeProgram(DegreeProgram degreeProgram)
     _degreeProgram = degreeProgram;
 }
 
-std::ostream& operator <<(std::ostream& out, const Student& student)
+bool Student::isValidEmail() const
 {
-    out << student.getStudentId()    << ',';
-    out << student.getFirstName()    << ',';
-    out << student.getLastName()     << ',';
-    out << student.getEmailAddress() << ',';
-    out << student.getAge()          << ',';
-    for(int i = 0; i < student.courses(); ++i) {
-        out << student.course_days(i) << ',';
+    int atCount = 0, dotCount = 0, spaceCount = 0;
+    for(auto it = _emailAddress.begin(); it != _emailAddress.end(); ++it) {
+        if (*it == '@') {
+            ++atCount;
+        }
+        else if (*it == '.') {
+            ++dotCount;
+        }
+        else if (*it == ' ') {
+            ++spaceCount;
+        }
     }
-    switch(student.getDegreeProgram()) {
-        case DegreeProgram::SECURITY: out << "SECURITY"; break;
-        case DegreeProgram::NETWORK:  out << "NETWORK";  break;
-        case DegreeProgram::SOFTWARE: out << "SOFTWARE"; break;
-    }
-    return out;
+    return atCount == 1 && dotCount > 0 && spaceCount == 0;
 }
 
 void Student::print() const
 {
-    std::cout << *this << std::endl;
+    std::cout << *this;
+}
+
+std::ostream& operator <<(std::ostream& out, const Student& student)
+{
+    out << student.getStudentId() << '\t';
+    out << "First Name: " << student.getFirstName()    << '\t';
+    out << "Last Name: "  << student.getLastName()     << '\t';
+    out << "Age: "        << student.getAge()          << '\t';
+    out << "daysInCourse: {";
+    for(size_t i = 0; i < student.courses(); ++i) {
+        out << ' ' << student.course_days(i);
+        if (i < student.courses() - 1) {
+            out << ',';
+        }
+    }
+    out << " }\t";
+    out << "Degree Program: ";
+    switch(student.getDegreeProgram()) {
+        case DegreeProgram::SECURITY: out << "Security"; break;
+        case DegreeProgram::NETWORK:  out << "Network";  break;
+        case DegreeProgram::SOFTWARE: out << "Software"; break;
+    }
+    out << std::endl;
+    return out;
 }

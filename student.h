@@ -46,6 +46,8 @@ class Student
         void setAge(int);
         void setDegreeProgram(DegreeProgram);
 
+        bool isValidEmail() const;
+
         void print() const;
 };
 

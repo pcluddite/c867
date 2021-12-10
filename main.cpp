@@ -19,17 +19,26 @@ int main(int argc, char** argv)
         classRoster.add(Student(studentString));
     }
 
+    std::cout << "====>         Student Data         <====" << std::endl;
     classRoster.printAll();
+
+    std::cout << std::endl << "====>          Bad Emails          <====" << std::endl;
     classRoster.printInvalidEmails();
 
+    std::cout << std::endl << "====>    Average Days in Course    <====" << std::endl;
     //loop through classRosterArray and for each element:
     for(int i = 0; i < classRoster.count(); ++i) {
         classRoster.printAverageDaysInCourse(classRoster[i].getStudentId());
     }
-
+    
+    std::cout << std::endl << "====> Students in Software Program <====" << std::endl;
     classRoster.printByDegreeProgram(DegreeProgram::SOFTWARE);
     classRoster.remove("A3");
+
+    std::cout << std::endl << "====>  Student Roster without A3   <====" << std::endl;
     classRoster.printAll();
+
+    std::cout << std::endl << "====>       Remove A3 Again        <====" << std::endl;
     classRoster.remove("A3");
     //expected: the above line should print a message saying such a student with this ID was not found.
 

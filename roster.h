@@ -18,7 +18,6 @@ class Roster
         Student** classRosterArray;
 
         void ensure_capacity(size_t newSize);
-        void add(Student* lpStudent);
     public:
         Roster();
         Roster(const Roster& other);

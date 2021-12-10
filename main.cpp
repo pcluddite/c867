@@ -9,17 +9,21 @@ static const std::string studentData[] = {
     "A2,Suzan,Erickson,Erickson_1990@gmailcom,19,50,30,40,NETWORK",
     "A3,Jack,Napoli,The_lawyer99yahoo.com,19,20,40,33,SOFTWARE",
     "A4,Erin,Black,Erin.black@comcast.net,22,50,58,40,SECURITY",
-    "A5,Timothy,Baxendale,tbaxend@wgu.edu,25,28,29,30,SOFTWARE"
+    "865484,Timothy,Baxendale,tbaxend@wgu.edu,25,28,29,30,SOFTWARE"
 };
 
 int main(int argc, char** argv)
 {
+    std::cout << "Scripting and Programming - Applications - C867" << std::endl;
+    std::cout << "Written in C++" << std::endl;
+    std::cout << "Student ID# 000865484\tTimothy Baxendale" << std::endl;
+
     Roster classRoster;
     for(const std::string& studentString : studentData) {
         classRoster.add(Student(studentString));
     }
 
-    std::cout << "====>         Student Data         <====" << std::endl;
+    std::cout << std::endl << "====>         Student Data         <====" << std::endl;
     classRoster.printAll();
 
     std::cout << std::endl << "====>          Bad Emails          <====" << std::endl;

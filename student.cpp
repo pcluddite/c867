@@ -39,7 +39,7 @@ Student::Student(Student&& other) noexcept
 
 Student::Student(const std::string& studentId, const std::string& firstName,
                  const std::string& lastName, const std::string& emailAddress,
-                 int age, const std::array<int,DEFAULT_COURSE_COUNT>& courseDays,
+                 int age, const COURSE_ARRAY& courseDays,
                  DegreeProgram degreeProgram) noexcept
     : _studentId(studentId),
       _firstName(firstName),
@@ -120,6 +120,11 @@ const std::string& Student::getEmailAddress() const
     return _emailAddress;
 }
 
+const COURSE_ARRAY& Student::getCourseDaysArray() const
+{
+    return _courseDays;
+}
+
 int Student::getAge() const
 {
     return _age;
@@ -148,6 +153,11 @@ void Student::setLastName(const std::string& lastName)
 void Student::setEmailAddress(const std::string& emailAddress)
 {
     _emailAddress = emailAddress;
+}
+
+void Student::setCourseDaysArray(const COURSE_ARRAY& courseDays)
+{
+    _courseDays = courseDays;
 }
 
 void Student::setAge(int age)

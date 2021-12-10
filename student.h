@@ -7,7 +7,9 @@
 
 #include "degree.h"
 
-const int DEFAULT_COURSE_COUNT = 3;
+const size_t COURSE_COUNT = 3;
+
+typedef std::array<int, COURSE_COUNT> COURSE_ARRAY;
 
 class Student
 {
@@ -17,7 +19,7 @@ class Student
         std::string _lastName;
         std::string _emailAddress;
         int _age;
-        std::array<int, DEFAULT_COURSE_COUNT> _courseDays;
+        COURSE_ARRAY _courseDays;
         DegreeProgram _degreeProgram;
     public:
     
@@ -26,7 +28,7 @@ class Student
         Student(Student&& other) noexcept;
         explicit Student(const std::string& studentId, const std::string& firstName,
                          const std::string& lastName, const std::string& emailAddress,
-                         int age, const std::array<int,DEFAULT_COURSE_COUNT>& courseDays,
+                         int age, const COURSE_ARRAY& courseDays,
                          DegreeProgram degreeProgram) noexcept;
         explicit Student(const std::string& dataString);
 
@@ -37,6 +39,7 @@ class Student
         const std::string& getFirstName() const;
         const std::string& getLastName() const;
         const std::string& getEmailAddress() const;
+        const COURSE_ARRAY& getCourseDaysArray() const;
         int getAge() const;
         DegreeProgram getDegreeProgram() const;
 
@@ -44,6 +47,7 @@ class Student
         void setFirstName(const std::string&);
         void setLastName(const std::string&);
         void setEmailAddress(const std::string&);
+        void setCourseDaysArray(const COURSE_ARRAY&);
         void setAge(int);
         void setDegreeProgram(DegreeProgram);
 

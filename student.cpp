@@ -182,6 +182,20 @@ void Student::print() const
     std::cout << *this << std::endl;
 }
 
+Student& Student::operator=(const Student& other) noexcept
+{
+    if (&other == this)
+        return *this;
+    _studentId     = other._studentId;
+    _firstName     = other._firstName;
+    _lastName      = other._lastName;
+    _emailAddress  = other._emailAddress;
+    _age           = other._age;
+    _courseDays    = other._courseDays;
+    _degreeProgram = other._degreeProgram;
+    return *this;
+}
+
 std::ostream& operator <<(std::ostream& out, const Student& student)
 {
     out << student.getStudentId() << '\t';

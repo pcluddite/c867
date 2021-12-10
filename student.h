@@ -50,6 +50,8 @@ class Student
         bool isValidEmail() const;
 
         void print() const;
+
+        Student& operator =(const Student&) noexcept;
 };
 
 std::ostream& operator <<(std::ostream& out, const Student& student);

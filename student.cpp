@@ -5,6 +5,13 @@
 #include "student.h"
 
 Student::Student()
+    : _studentId(""),
+      _firstName(""),
+      _lastName(""),
+      _emailAddress(""),
+      _degreeProgram(),
+      _courseDays({0, 0, 0}),
+      _age(0)
 {
 }
 
@@ -41,6 +48,7 @@ static size_t NextToken(const std::string& szFull, std::string& token, size_t nS
 }
 
 Student::Student(const std::string& dataString)
+    : _degreeProgram(DegreeProgram::NONE)
 {
     int idx = 0;
     idx = NextToken(dataString, _studentId   , idx);
@@ -182,6 +190,7 @@ std::ostream& operator <<(std::ostream& out, const Student& student)
         case DegreeProgram::SECURITY: out << "Security"; break;
         case DegreeProgram::NETWORK:  out << "Network";  break;
         case DegreeProgram::SOFTWARE: out << "Software"; break;
+        default: out << "N/A"; break;
     }
     return out;
 }

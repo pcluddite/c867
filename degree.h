@@ -4,6 +4,7 @@
 
 enum class DegreeProgram
 {
+    NONE,
     SECURITY,
     NETWORK,
     SOFTWARE

@@ -11,21 +11,20 @@ Roster::Roster()
 }
 
 Roster::Roster(const Roster& other)
-    : capacity(other.count()), size(other.count())
+    : capacity(other.size), size(0)
 {
     classRosterArray = new Student*[capacity];
-    for(size_t i = 0; i < other.size; ++i) {
-        classRosterArray[i] = new Student(*(other.classRosterArray[i]));
+    for(size_t i = 0; i < size; ++i) {
+        this->add(*other.classRosterArray[i]);
     }
 }
 
 Roster::Roster(const std::initializer_list<Student>& students)
-    : capacity(students.size()), size(students.size())
+    : capacity(students.size()), size(0)
 {
     classRosterArray = new Student*[capacity];
-    size_t i = 0;
     for(auto it = students.begin(); it != students.end(); ++it) {
-        classRosterArray[i++] = new Student(*it);
+        this->add(*it);
     }
 }
 
@@ -127,7 +126,7 @@ void Roster::printAverageDaysInCourse(const std::string& studentID) const
     const Student* lpStudent = find(studentID);
     double avg = 0;
     if (lpStudent != nullptr) {
-        long int sum = 0;
+        size_t sum = 0;
         for (int i = 0; i < lpStudent->courses(); ++i) {
             sum += lpStudent->course_days(i);
         }

@@ -32,7 +32,9 @@
 *.app
 
 # VS
-.vscode
-.vs
+.vscode/
+.vs/
 *.vcxproj.filters
 *.vcxproj.user
+x64/
+x86/

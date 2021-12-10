@@ -31,5 +31,8 @@
 *.out
 *.app
 
-# VSCode
+# VS
 .vscode
+.vs
+*.vcxproj.filters
+*.vcxproj.user

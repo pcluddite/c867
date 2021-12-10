@@ -3,7 +3,6 @@
 #define _ROSTER_H
 
 #include <initializer_list>
-#include <iostream>
 #include <string>
 
 #include "degree.h"
@@ -18,6 +17,7 @@ class Roster
         Student** classRosterArray;
 
         void ensure_capacity(size_t newSize);
+        void destroy_roster();
     public:
         Roster();
         Roster(const Roster& other);
@@ -42,7 +42,5 @@ class Roster
         void printInvalidEmails() const;
         void printByDegreeProgram(DegreeProgram degreeProgram) const;
 };
-
-std::ostream& operator <<(std::ostream& out, const Roster& roster);
 
 #endif

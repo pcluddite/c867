@@ -1,18 +1,35 @@
 #include <algorithm>
+#include <iostream>
 
 #include "roster.h"
 
 static const int INITIAL_CAPACITY = 2;
 
+// creates an array of pointers that are laid out in memory contiguously
 template<class T>
 static T** init_contiguous_array_ptr(size_t len)
 {
+    // initialize an array of pointers
     T** lpPtrArr = new T*[len];
+
+    // initialize an array of T objects
     T* lpArr = new T[len];
+
+    // loop through the array of T objects and assign the pointer to
+    // each element to the lpPtrArr array
     for (size_t idx = 0; idx < len; ++idx) {
         lpPtrArr[idx] = &lpArr[idx];
     }
+
+    // return the array of pointers
     return lpPtrArr;
+}
+
+// copies the elements from one contiguous array to another
+template<class T>
+static void copy_contiguous_array_ptr(T** lpSrc, T** lpDest, size_t size)
+{
+    std::copy(*lpSrc, lpSrc[size - 1] + 1, *lpDest);
 }
 
 Roster::Roster()
@@ -31,7 +48,7 @@ Roster::Roster(const Roster& other)
     else {
         capacity = other.size;
         classRosterArray = init_contiguous_array_ptr<Student>(capacity);
-        std::copy(other.classRosterArray[0], other.classRosterArray[other.size - 1] + 1, *classRosterArray);
+        copy_contiguous_array_ptr(other.classRosterArray, classRosterArray, other.size);
     }
 }
 
@@ -44,8 +61,7 @@ Roster::Roster(const std::initializer_list<Student>& students)
 
 Roster::~Roster()
 {
-    delete[] *classRosterArray;
-    delete[] classRosterArray;
+    destroy_roster();
 }
 
 void Roster::ensure_capacity(size_t newSize)
@@ -53,11 +69,21 @@ void Roster::ensure_capacity(size_t newSize)
     if (newSize >= capacity) {
         capacity = newSize * 2;
         Student** newArray = init_contiguous_array_ptr<Student>(capacity);
-        std::copy(*classRosterArray, classRosterArray[size - 1] + 1, *newArray);
-        delete[] *classRosterArray;
-        delete[] classRosterArray;
+        copy_contiguous_array_ptr(classRosterArray, newArray, size);
+        destroy_roster();
         classRosterArray = newArray;
     }
+}
+
+void Roster::destroy_roster()
+{
+    // memory was initilized as 2 arrays, which both need to be destroyed.
+    // the first element of classRosterArray should point to an array of
+    // Student objects. The classRosterArray pointer itself points to the
+    // pointer of that contiguous block
+    delete[] *classRosterArray;
+    delete[] classRosterArray;
+    classRosterArray = nullptr;
 }
 
 void Roster::add(const std::string& studentID, const std::string& firstName, const std::string& lastName,
@@ -110,9 +136,8 @@ void Roster::trim_excess()
 {
     if (size < capacity) {
         Student** newArray = init_contiguous_array_ptr<Student>(size);
-        std::copy(*classRosterArray, classRosterArray[size - 1] + 1, *newArray);
-        delete[] *classRosterArray;
-        delete[] classRosterArray;
+        copy_contiguous_array_ptr(classRosterArray, newArray, size);
+        destroy_roster();
         capacity = size;
         classRosterArray = newArray;
     }

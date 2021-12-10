@@ -4,7 +4,7 @@
 
 #include "student.h"
 
-Student::Student()
+Student::Student() noexcept
     : _studentId(""),
       _firstName(""),
       _lastName(""),
@@ -15,7 +15,7 @@ Student::Student()
 {
 }
 
-Student::Student(const Student& other)
+Student::Student(const Student& other) noexcept
     : _studentId(other.getStudentId()),
       _firstName(other.getFirstName()),
       _lastName(other.getLastName()),
@@ -26,10 +26,21 @@ Student::Student(const Student& other)
 {
 }
 
+Student::Student(Student&& other) noexcept
+    : _studentId(std::move(other._studentId)),
+      _firstName(std::move(other._firstName)),
+      _lastName(std::move(other._lastName)),
+      _emailAddress(std::move(other._emailAddress)),
+      _degreeProgram(std::exchange(other._degreeProgram, DegreeProgram::NONE)),
+      _courseDays(std::move(other._courseDays)),
+      _age(std::exchange(other._age, 0))
+{
+}
+
 Student::Student(const std::string& studentId, const std::string& firstName,
                  const std::string& lastName, const std::string& emailAddress,
                  int age, const std::array<int,DEFAULT_COURSE_COUNT>& courseDays,
-                 DegreeProgram degreeProgram)
+                 DegreeProgram degreeProgram) noexcept
     : _studentId(studentId),
       _firstName(firstName),
       _lastName(lastName),
@@ -50,7 +61,7 @@ static size_t NextToken(const std::string& szFull, std::string& token, size_t nS
 Student::Student(const std::string& dataString)
     : _degreeProgram(DegreeProgram::NONE)
 {
-    int idx = 0;
+    size_t idx = 0;
     idx = NextToken(dataString, _studentId   , idx);
     idx = NextToken(dataString, _firstName   , idx);
     idx = NextToken(dataString, _lastName    , idx);

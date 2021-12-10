@@ -2,7 +2,7 @@
 
 #include "roster.h"
 
-static const int INITIAL_CAPACITY = 10;
+static const int INITIAL_CAPACITY = 2;
 
 template<class T>
 static T** init_contiguous_array_ptr(size_t len)
@@ -44,11 +44,11 @@ Roster::~Roster()
 void Roster::ensure_capacity(size_t newSize)
 {
     while (newSize >= capacity) {
-        Student** newArray = init_contiguous_array_ptr<Student>(capacity * 2);
-        std::copy(*classRosterArray, classRosterArray[capacity], *newArray);
+        Student** newArray = init_contiguous_array_ptr<Student>(newSize * 2);
+        std::copy(classRosterArray[0], classRosterArray[capacity - 1] + 1, *newArray);
         delete[] *classRosterArray;
         delete[] classRosterArray;
-        capacity *= 2;
+        capacity = newSize * 2;
         classRosterArray = newArray;
     }
 }

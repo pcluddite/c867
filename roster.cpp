@@ -22,10 +22,17 @@ Roster::Roster()
 }
 
 Roster::Roster(const Roster& other)
-    : capacity(other.size), size(other.size)
+    : size(other.size)
 {
-    classRosterArray = init_contiguous_array_ptr<Student>(capacity);
-    std::copy(other.classRosterArray[0], other.classRosterArray[other.size], *classRosterArray);
+    if (other.size == 0) {
+        capacity = INITIAL_CAPACITY;
+        classRosterArray = init_contiguous_array_ptr<Student>(capacity);
+    }
+    else {
+        capacity = other.size;
+        classRosterArray = init_contiguous_array_ptr<Student>(capacity);
+        std::copy(other.classRosterArray[0], other.classRosterArray[other.size - 1] + 1, *classRosterArray);
+    }
 }
 
 Roster::Roster(const std::initializer_list<Student>& students)
@@ -43,12 +50,12 @@ Roster::~Roster()
 
 void Roster::ensure_capacity(size_t newSize)
 {
-    while (newSize >= capacity) {
-        Student** newArray = init_contiguous_array_ptr<Student>(newSize * 2);
-        std::copy(classRosterArray[0], classRosterArray[capacity - 1] + 1, *newArray);
+    if (newSize >= capacity) {
+        capacity = newSize * 2;
+        Student** newArray = init_contiguous_array_ptr<Student>(capacity);
+        std::copy(*classRosterArray, classRosterArray[size - 1] + 1, *newArray);
         delete[] *classRosterArray;
         delete[] classRosterArray;
-        capacity = newSize * 2;
         classRosterArray = newArray;
     }
 }
@@ -71,7 +78,7 @@ void Roster::remove(const std::string& studentID)
     for(size_t i = 0; i < size; ++i) {
         if (classRosterArray[i]->getStudentId() == studentID) {
             if (i + 1 < size)
-                std::move(classRosterArray[i + 1], classRosterArray[size], classRosterArray[i]);
+                std::move(classRosterArray[i + 1], classRosterArray[size - 1] + 1, classRosterArray[i]);
             --size;
             return;
         }
@@ -103,7 +110,7 @@ void Roster::trim_excess()
 {
     if (size < capacity) {
         Student** newArray = init_contiguous_array_ptr<Student>(size);
-        std::copy(*classRosterArray, classRosterArray[size], *newArray);
+        std::copy(*classRosterArray, classRosterArray[size - 1] + 1, *newArray);
         delete[] *classRosterArray;
         delete[] classRosterArray;
         capacity = size;
@@ -121,15 +128,18 @@ void Roster::printAll() const
 void Roster::printAverageDaysInCourse(const std::string& studentID) const
 {
     const Student* lpStudent = find(studentID);
-    double avg = 0;
-    if (lpStudent != nullptr) {
+    if (lpStudent == nullptr) {
+        std::cout << "NA" << std::endl;
+    }
+    else {
+        double avg = 0;
         size_t sum = 0;
         for (int i = 0; i < lpStudent->courses(); ++i) {
             sum += lpStudent->course_days(i);
         }
         avg = sum / (double)lpStudent->courses();
+        std::cout << avg << std::endl;
     }
-    std::cout << avg << std::endl;
 }
 
 void Roster::printInvalidEmails() const

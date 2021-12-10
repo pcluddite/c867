@@ -34,7 +34,6 @@
 # VS
 .vscode/
 .vs/
-*.vcxproj.filters
 *.vcxproj.user
 x64/
 x86/
